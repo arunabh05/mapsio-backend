@@ -16,8 +16,8 @@ public class User {
     private String accessToken;
     private String refreshToken;
     private List<Location> favorites = new ArrayList<>();
-    private List<Location> calendarEvents;
-    private List<Trip> trips;
+    private List<Location> calendarEvents = new ArrayList<>();
+    private List<Trip> trips = new ArrayList<>();
 
     public User() {}
 
@@ -68,6 +68,14 @@ public class User {
 
     public void addTrip(Trip trip){
         trips.add(trip);
+    }
+
+    public void addCalendarEvent(Location location){
+        calendarEvents.add(location);
+    }
+
+    public void removeCalendarEvent(Location location){
+        calendarEvents.remove(location);
     }
 
 /*

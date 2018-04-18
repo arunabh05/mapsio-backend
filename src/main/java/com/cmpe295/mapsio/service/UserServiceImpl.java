@@ -3,9 +3,7 @@ package com.cmpe295.mapsio.service;
 import com.cmpe295.mapsio.domain.Location;
 import com.cmpe295.mapsio.domain.User;
 import com.cmpe295.mapsio.repository.UserRepository;
-import com.google.api.client.googleapis.GoogleUtils;
 import com.google.api.services.calendar.model.Event;
-import com.google.maps.GeoApiContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,11 +35,11 @@ public class UserServiceImpl implements UserService {
             user = user1.get();
             List<Event> events = googleService.getUserCalendarEvents(user);
             for(Event event : events){
-            //TODO: Get geo-coded values for location.
-                googleService.geocodeLocation(event.getLocation());
+                Location location = googleService.geocodeLocation(event.getLocation());
+                if(location != null)    user.addCalendarEvent(location);
             }
             userRepository.save(user);
         }
-        return user;
+        return user1.orElse(user);
     }
 }
