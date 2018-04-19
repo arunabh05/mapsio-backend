@@ -34,5 +34,4 @@ public class TripController {
                 HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(trip, HttpStatus.OK);
     }
-
 }

@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/api/users/authCode")
-    public ResponseEntity<?> setUserRequestId(@RequestBody User user) {
+    public ResponseEntity<?> setUserAuthCode(@RequestBody User user) {
         user = googleService.getUserAccessToken(user);
         user = userService.getUserCalendarEvents(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
