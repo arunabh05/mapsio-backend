@@ -5,16 +5,32 @@ package com.cmpe295.mapsio.domain;
  */
 public class Location {
 
+    private String placeId;
     private String name;
-    private String latitude;
-    private String longitude;
+    private String address;
+    private LatLng latLng;
+    private String imageURL;
+    private boolean isFavorite;
+    private float rating;
 
-    public Location(){};
+    public Location(){}
 
-    public Location(String name, String latitude, String longitude) {
+    public Location(String placeId, String name, LatLng latLng, String address,
+                    boolean isFavorite, float rating) {
+        this.placeId = placeId;
         this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.address = address;
+        this.latLng = latLng;
+        this.isFavorite = isFavorite;
+        this.rating = rating;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 
     public String getName() {
@@ -25,19 +41,51 @@ public class Location {
         this.name = name;
     }
 
-    public String getLatitude() {
-        return latitude;
+    public LatLng getLatLng() {
+        return latLng;
     }
 
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
+    public void setLatLng(LatLng latLng) {
+        this.latLng = latLng;
     }
 
-    public String getLongitude() {
-        return longitude;
+    public void setLatitude(double latitude) {
+        this.latLng.lat = latitude;
+    }
+    public void setLongitude(double longitude) {
+        this.latLng.lng = longitude;
     }
 
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 }

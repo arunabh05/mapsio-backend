@@ -1,6 +1,7 @@
 package com.cmpe295.mapsio.domain;
 
-import com.google.api.client.util.DateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  * @author arunabh.shrivastava
@@ -9,14 +10,33 @@ public class Trip {
 
     private Location startLocation;
     private Location endLocation;
-    private DateTime journeyDate;
+    private String journeyTime;
+    private String journeyDate;
 
-    public Trip() {}
+    public int getVisits() {
+        return visits;
+    }
 
-    public Trip(Location startLocation, Location endLocation, DateTime journeyDate) {
+    public void setVisits(int visits) {
+        this.visits = visits;
+    }
+
+    void addVisit(){
+        this.visits++;
+    }
+
+    private int visits;
+
+    public Trip() {
+        this.journeyDate = LocalDate.now().toString() + ", " + LocalDate.now().getDayOfWeek();
+        this.journeyTime = LocalTime.now().toString();
+    }
+
+    public Trip(Location startLocation, Location endLocation) {
         this.startLocation = startLocation;
         this.endLocation = endLocation;
-        this.journeyDate = journeyDate;
+        this.journeyDate = LocalDate.now().toString() + ", " + LocalDate.now().getDayOfWeek();
+        this.journeyTime = LocalTime.now().toString();
     }
 
     public Location getStartLocation() {
@@ -35,11 +55,19 @@ public class Trip {
         this.endLocation = endLocation;
     }
 
-    public DateTime getJourneyDate() {
+    public String getJourneyDate() {
         return journeyDate;
     }
 
-    public void setJourneyDate(DateTime journeyDate) {
-        this.journeyDate = journeyDate;
+    public void setJourneyDate() {
+        this.journeyDate = LocalDate.now().toString() + ", " + LocalDate.now().getDayOfWeek();
+    }
+
+    public String getJourneyTime() {
+        return journeyTime;
+    }
+
+    public void setJourneyTime() {
+        this.journeyTime = LocalTime.now().toString();
     }
 }

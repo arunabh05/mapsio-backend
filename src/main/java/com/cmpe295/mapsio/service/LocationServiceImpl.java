@@ -3,11 +3,11 @@ package com.cmpe295.mapsio.service;
 import com.cmpe295.mapsio.domain.Location;
 import com.cmpe295.mapsio.domain.User;
 import com.cmpe295.mapsio.repository.UserRepository;
+import com.cmpe295.mapsio.domain.LatLng;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author arunabh.shrivastava
@@ -17,37 +17,37 @@ import java.util.Optional;
 public class LocationServiceImpl implements LocationService{
 
     private final UserRepository userRepository;
+    private final GoogleService googleService;
 
     @Autowired
-    public LocationServiceImpl(UserRepository userRepository) {
+    public LocationServiceImpl(UserRepository userRepository, GoogleService googleService) {
         this.userRepository = userRepository;
+        this.googleService = googleService;
     }
 
     @Override
-    public List<Location> getAllFavorites(String userId) {
-        Optional<User> user1 = userRepository.findById(userId);
-        return user1.map(User::getFavorites).orElse((null));
+    public List<Location> getAllFavorites(User user) {
+        return user.getFavorites();
     }
 
     @Override
-    public Location addFavorite(String userId, Location location) {
-        Optional<User> user1 = userRepository.findById(userId);
-        if(user1.isPresent()){
-            user1.get().addFavoriteLocation(location);
-            userRepository.save(user1.get());
-            return location;
-        }
-        return null;
+    public Location getLocationPlaceDetails(LatLng latLng) {
+        return googleService.getPlaceDetails(latLng);
     }
 
     @Override
-    public Location removeFavorite(String userId, Location location) {
-        Optional<User> user1 = userRepository.findById(userId);
-        if(user1.isPresent()){
-            user1.get().removeFavoriteLocation(location);
-            userRepository.save(user1.get());
-            return location;
-        }
-        return null;
+    public Location addFavorite(User user, Location location) {
+        user.addFavoriteLocation(location);
+        userRepository.save(user);
+        return location;
+    }
+
+    @Override
+    public Location removeFavorite(User user, Location location) {
+        location = user.getFavoriteLocation(location);
+        if(location == null)    return null;
+        user.removeFavoriteLocation(location);
+        userRepository.save(user);
+        return location;
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MapsioApplication{
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(MapsioApplication.class, args);
 	}
 }

@@ -59,7 +59,16 @@ public class User {
     }
 
     public void addFavoriteLocation(Location location){
+        Location favoriteLocation = getFavoriteLocation(location);
+        if(favoriteLocation != null)    return;
         favorites.add(location);
+    }
+
+    public Location getFavoriteLocation(Location location){
+        for(Location favoriteLocations : favorites){
+            if(favoriteLocations.getPlaceId().equals(location.getPlaceId()))    return favoriteLocations;
+        }
+        return null;
     }
 
     public void removeFavoriteLocation(Location location){
@@ -67,6 +76,13 @@ public class User {
     }
 
     public void addTrip(Trip trip){
+        for(Trip previousTrip : trips){
+            if(previousTrip.getStartLocation().getName().equals(trip.getStartLocation().getName()) &&
+                    previousTrip.getEndLocation().getName().equals(trip.getEndLocation().getName())){
+                previousTrip.addVisit();
+                return;
+            }
+        }
         trips.add(trip);
     }
 
@@ -74,15 +90,9 @@ public class User {
         calendarEvents.add(location);
     }
 
-    public void removeCalendarEvent(Location location){
-        calendarEvents.remove(location);
+    public List<Trip> getTrips() {
+        return trips;
     }
-
-/*
-    public void removeFavoriteLocation(Trip trip){
-        favorites.remove(trip);
-    }
-*/
 
     public List<Location> getFavorites() {
         return favorites;

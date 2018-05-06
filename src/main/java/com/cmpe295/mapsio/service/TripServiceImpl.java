@@ -6,8 +6,6 @@ import com.cmpe295.mapsio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 /**
  * @author arunabh.shrivastava
  */
@@ -24,13 +22,10 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public Trip addNewTrip(String userId, Trip trip) {
-        Optional<User> user1 = userRepository.findById(userId);
-        if(user1.isPresent()){
-            user1.get().addTrip(trip);
-            userRepository.save(user1.get());
-            return trip;
-        }
-        return null;
+    public Trip addNewTrip(User user, Trip trip) {
+        trip.setVisits(1);
+        user.addTrip(trip);
+        userRepository.save(user);
+        return trip;
     }
 }
