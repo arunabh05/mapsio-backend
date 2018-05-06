@@ -55,15 +55,15 @@ public class UserController {
     @ApiOperation(value = "Return recommended locations for a user.", tags = "users")
     @PostMapping(value = "/recommendations")
     public ResponseEntity<?> test(@RequestParam(value = "userId") String userId,
-                                  @RequestBody LatLng latlng) {
-        if(!validationService.isValidLatlng(latlng))
+                                  @RequestBody Location location) {
+        if(!validationService.isValidLocation(location))
             return new ResponseEntity<>(new Error(ERROR_NULL_LOCATION), HttpStatus.BAD_REQUEST);
 
         User user = userService.getUser(userId);
         if(user == null)
             return new ResponseEntity<>(new Error(ERROR_USER_NOT_FOUND), HttpStatus.NOT_FOUND);
 
-        List<Location> locationList = userService.getRecommendedLocations(user, latlng);
+        List<Location> locationList = userService.getRecommendedLocations(user, location);
         return new ResponseEntity<>(locationList, HttpStatus.OK);
     }
 }

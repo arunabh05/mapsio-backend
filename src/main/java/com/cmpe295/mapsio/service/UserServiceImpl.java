@@ -51,9 +51,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Location> getRecommendedLocations(User user, LatLng latLng) {
+    public List<Location> getRecommendedLocations(User user, Location location) {
 
-        Location location = googleService.reverseGeocodeLocation(latLng);
         LocalTime now = LocalTime.now().minusHours(2);
         LocalTime end = (LocalTime.now().plusHours(2).isAfter(now))
                 ?LocalTime.now().plusHours(2):LocalTime.of(23,59);

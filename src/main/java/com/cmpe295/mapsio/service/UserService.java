@@ -14,5 +14,5 @@ public interface UserService {
     User getUserAccessToken(User user);
     User getUser(String userId);
     List<Location> getUserCalendarLocations(User user);
-    List<Location> getRecommendedLocations(User user, LatLng latLng);
+    List<Location> getRecommendedLocations(User user, Location location);
 }
